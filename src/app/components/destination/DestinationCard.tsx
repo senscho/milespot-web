@@ -38,9 +38,7 @@ export function DestinationCard({ destination }: DestinationCardProps) {
           <div className="flex flex-wrap gap-2">
             {destination.popularActivities.map((activity, index) => (
               <span key={index} className="bg-gray-100 text-gray-800 px-2 py-1 rounded flex items-center gap-1">
-                {activity.icon && (
-                  <span className="material-icons text-sm">{activity.icon}</span>
-                )}
+                <span className="text-xl">{activity.icon || '🎯'}</span>
                 {activity.name.ko}
               </span>
             ))}
