@@ -1,13 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { BlogPost } from '@/lib/strapi';
+import type { Post } from '@/lib/strapi';
 
 interface BlogPostProps {
-  post: BlogPost;
+  post: Post;
 }
 
-export function BlogPostPreview({ post }: BlogPostProps) {
+export function BlogPost({ post }: BlogPostProps) {
   return (
     <article className="py-8 border-b border-gray-200 last:border-0">
       <header className="mb-4">

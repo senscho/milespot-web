@@ -1,8 +1,8 @@
-import { getBlogPosts } from '@/lib/strapi';
-import { BlogPostPreview } from '../components/blog/BlogPost';
+import { getPosts } from '@/lib/strapi';
+import { BlogPost } from '../components/blog/BlogPost';
 
 export default async function BlogPage() {
-  const posts = await getBlogPosts();
+  const posts = await getPosts();
   console.log('Blog posts:', JSON.stringify(posts, null, 2));
 
   return (
@@ -10,7 +10,7 @@ export default async function BlogPage() {
       <h1 className="text-3xl font-bold mb-8">블로그</h1>
       <div className="divide-y divide-gray-200">
         {posts.map((post) => (
-          <BlogPostPreview key={post.id} post={post} />
+          <BlogPost key={post.id} post={post} />
         ))}
       </div>
     </main>

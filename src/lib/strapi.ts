@@ -15,7 +15,7 @@ interface StrapiUser {
   publishedAt: string;
 }
 
-export interface BlogPost {
+export interface Post {
   id: number;
   documentId: string;
   Title: string;
@@ -44,7 +44,7 @@ export interface StrapiResponse<T> {
   }
 }
 
-export async function getBlogPosts(): Promise<Array<BlogPost>> {
+export async function getPosts(): Promise<Array<Post>> {
   const response = await fetch(
     `${env.NEXT_PUBLIC_STRAPI_API_URL}/api/posts?populate=*`,
     {
@@ -55,10 +55,10 @@ export async function getBlogPosts(): Promise<Array<BlogPost>> {
   );
 
   if (!response.ok) {
-    throw new Error('Failed to fetch blog posts');
+    throw new Error('Failed to fetch posts');
   }
 
-  const data = await response.json() as StrapiResponse<BlogPost>;
+  const data = await response.json() as StrapiResponse<Post>;
   return data.data;
 }
 
