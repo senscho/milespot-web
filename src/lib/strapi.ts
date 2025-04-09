@@ -2,13 +2,34 @@ import { env } from '@/env.mjs';
 import { Destination } from '@/types/destination';
 import { Hotel } from '@/types/hotel';
 
-export interface BlogPost {
+interface StrapiUser {
   id: number;
-  Title: string;
-  Content: string;
+  username: string;
+  email: string;
+  documentId: string;
+  provider: string;
+  confirmed: boolean;
+  blocked: boolean;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+}
+
+export interface BlogPost {
+  id: number;
+  documentId: string;
+  Title: string;
+  Slug: string | null;
+  Content: string;
+  PublishedDate: string | null;
+  Author: StrapiUser;
+  destinations: Array<Destination>;
+  hotels: Array<Hotel>;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  locale: string;
+  localizations: any[];
 }
 
 export interface StrapiResponse<T> {
@@ -23,9 +44,7 @@ export interface StrapiResponse<T> {
   }
 }
 
-export type BlogPostWithId = BlogPost['attributes'] & { id: number };
-
-export async function getBlogPosts(): Promise<BlogPostWithId[]> {
+export async function getBlogPosts(): Promise<Array<BlogPost>> {
   const response = await fetch(
     `${env.NEXT_PUBLIC_STRAPI_API_URL}/api/posts?populate=*`,
     {
@@ -40,13 +59,7 @@ export async function getBlogPosts(): Promise<BlogPostWithId[]> {
   }
 
   const data = await response.json() as StrapiResponse<BlogPost>;
-  console.log('Strapi API Response:', data);
-  
-  // Transform the response to match the expected format
-  return data.data.map(post => ({
-    id: post.id,
-    ...post.attributes
-  }));
+  return data.data;
 }
 
 export async function getDestinations() {
