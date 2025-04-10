@@ -96,4 +96,22 @@ export async function getHotels() {
 
   const data = await response.json();
   return data.data as Hotel[];
+}
+
+export async function getHotelBySlug(slug: string): Promise<Hotel | null> {
+  const response = await fetch(
+    `${env.NEXT_PUBLIC_STRAPI_API_URL}/api/hotels?filters[slug][$eq]=${slug}&populate=*`,
+    {
+      headers: {
+        Authorization: `Bearer ${env.STRAPI_API_TOKEN}`,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch hotel');
+  }
+
+  const data = await response.json() as StrapiResponse<Hotel>;
+  return data.data[0] || null;
 } 
